@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>وصلة للتوصيل</title>
+    <meta
+      name="description"
+      content="وصلة تطبيق توصيل بالدراجات النارية في موريتانيا للزبائن والركاب والمشرفين في تطبيق واحد."
+    />
+    <meta property="og:title" content="وصلة للتوصيل" />
+    <meta property="og:description" content="توصيل الطرود بالدراجات في نواكشوط ونواذيبو." />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#0b7a53" />
+    <link rel="manifest" href="site.webmanifest" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <section class="login-view" id="loginView" aria-labelledby="loginTitle">
+        <div class="login-card">
+          <a class="brand login-brand" href="#" aria-label="وصلة">
+            <span class="brand-mark">و</span>
+            <span>
+              <strong>وصلة</strong>
+              <small>توصيل بالدراجات</small>
+            </span>
+          </a>
+
+          <form class="login-form" id="loginForm">
+            <p class="eyebrow">دخول آمن</p>
+            <h1 id="loginTitle">ادخل برقم الهاتف</h1>
+            <div class="field">
+              <label for="loginPhone">رقم الهاتف</label>
+              <input
+                id="loginPhone"
+                name="loginPhone"
+                type="tel"
+                inputmode="tel"
+                dir="ltr"
+                placeholder="+222 44 00 00 00"
+                autocomplete="tel"
+                required
+              />
+              <p class="field-hint">سنرسل رمز SMS إلى هذا الرقم قبل فتح الحساب.</p>
+            </div>
+            <div class="field otp-field" id="otpField" hidden>
+              <label for="loginCode">رمز SMS</label>
+              <input
+                id="loginCode"
+                name="loginCode"
+                type="text"
+                inputmode="numeric"
+                dir="ltr"
+                maxlength="6"
+                placeholder="000000"
+                autocomplete="one-time-code"
+              />
+              <p class="field-hint" id="otpHint">أدخل الرمز الذي وصلك في الرسالة.</p>
+            </div>
+            <div class="login-actions">
+              <button class="primary-button" type="submit" id="loginSubmit">إرسال رمز SMS</button>
+              <button class="quiet-button" type="button" id="changePhone" hidden>تغيير الرقم</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <section class="authenticated-app" id="authenticatedApp" hidden>
+        <header class="topbar">
+          <a class="brand" href="#" aria-label="وصلة">
+            <span class="brand-mark">و</span>
+            <span>
+              <strong>وصلة</strong>
+              <small id="roleLabel">زبون</small>
+            </span>
+          </a>
+
+          <nav class="city-tabs" id="cityTabs" aria-label="مدينة الخدمة">
+            <button class="city-tab active" type="button" data-city-tab="nouakchott">نواكشوط</button>
+            <button class="city-tab" type="button" data-city-tab="nouadhibou">نواذيبو</button>
+          </nav>
+
+          <div class="account-box">
+            <span id="accountName">زائر</span>
+            <button class="quiet-button compact" type="button" id="logoutButton">خروج</button>
+          </div>
+        </header>
+
+        <main>
+          <section class="workspace role-view" data-role-view="customer" aria-labelledby="orderTitle">
+            <section class="order-panel">
+              <div class="panel-head">
+                <div>
+                  <p class="eyebrow">تطبيق الزبون</p>
+                  <h1 id="orderTitle">أرسل طردك بالدراجة</h1>
+                </div>
+                <span class="status-pill" id="cityStatus">نواكشوط مفتوحة</span>
+              </div>
+
+              <form id="deliveryForm" class="delivery-form">
+                <div class="field-row">
+                  <div class="field">
+                    <label for="city">مدينة الاستلام</label>
+                    <select id="city" name="city">
+                      <option value="nouakchott">نواكشوط</option>
+                      <option value="nouadhibou">نواذيبو</option>
+                    </select>
+                  </div>
+
+                  <div class="field">
+                    <label for="packageSize">حجم الطرد</label>
+                    <select id="packageSize" name="packageSize">
+                      <option value="small">طرد صغير</option>
+                      <option value="medium">صندوق متوسط</option>
+                      <option value="large">حقيبة كبيرة</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="field-row">
+                  <div class="field">
+                    <label for="pickup">منطقة الاستلام</label>
+                    <select id="pickup" name="pickup"></select>
+                  </div>
+
+                  <div class="field">
+                    <label for="dropoff">منطقة التسليم</label>
+                    <select id="dropoff" name="dropoff"></select>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="pickupAddress">عنوان الاستلام</label>
+                  <input id="pickupAddress" name="pickupAddress" type="text" placeholder="شارع، محل، أو معلم قريب" />
+                </div>
+
+                <div class="field">
+                  <label for="dropoffAddress">عنوان التسليم</label>
+                  <input id="dropoffAddress" name="dropoffAddress" type="text" placeholder="منزل، مكتب، أو معلم قريب" />
+                </div>
+
+                <div class="field-row">
+                  <div class="field">
+                    <label for="phone">هاتف المستلم</label>
+                    <input id="phone" name="phone" type="tel" dir="ltr" placeholder="+222 ..." />
+                  </div>
+
+                  <div class="field">
+                    <label for="payment">الدفع</label>
+                    <select id="payment" name="payment">
+                      <option>نقدا عند الاستلام</option>
+                      <option>نقدا عند التسليم</option>
+                      <option>بنكيلي</option>
+                      <option>مصرفي</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="quote-strip" aria-live="polite">
+                  <div>
+                    <span>السعر المتوقع</span>
+                    <strong id="quoteFee">120 أوقية</strong>
+                  </div>
+                  <div>
+                    <span>وصول الراكب</span>
+                    <strong id="quoteEta">18 دقيقة</strong>
+                  </div>
+                  <div>
+                    <span>المسافة</span>
+                    <strong id="quoteDistance">3.2 كم</strong>
+                  </div>
+                </div>
+
+                <button class="primary-button" type="submit">طلب راكب</button>
+              </form>
+            </section>
+
+            <section class="route-panel" aria-labelledby="routeTitle">
+              <div class="route-visual">
+                <img src="assets/courier-mauritania.png" alt="راكب توصيل بدراجة نارية" />
+                <div class="route-overlay">
+                  <p class="eyebrow">مسار وصلة</p>
+                  <h2 id="routeTitle">توصيل سريع داخل المدينة</h2>
+                  <div class="route-line" aria-hidden="true">
+                    <span class="pin pickup-pin"></span>
+                    <span class="path"></span>
+                    <span class="pin dropoff-pin"></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="metrics-grid" aria-label="مؤشرات التوصيل">
+                <div class="metric">
+                  <span>الدراجات المتاحة</span>
+                  <strong id="motorCount">12</strong>
+                </div>
+                <div class="metric">
+                  <span>طلبات اليوم</span>
+                  <strong id="todayOrders">38</strong>
+                </div>
+                <div class="metric">
+                  <span>متوسط التوصيل</span>
+                  <strong id="averageTime">31 د</strong>
+                </div>
+              </div>
+
+              <div class="customer-tracking" id="customerTracking">
+                لا يوجد راكب مخصص لطلبك الآن.
+              </div>
+            </section>
+
+            <section class="orders-panel" aria-labelledby="ordersTitle">
+              <div class="panel-head">
+                <div>
+                  <p class="eyebrow">تتبع الطلب</p>
+                  <h2 id="ordersTitle">طلباتي النشطة</h2>
+                </div>
+                <span class="status-pill muted" id="orderCount">0 نشطة</span>
+              </div>
+              <div class="orders-list" id="ordersList"></div>
+            </section>
+          </section>
+
+          <section class="workspace rider-workspace role-view" data-role-view="rider" aria-labelledby="riderTitle">
+            <section class="rider-panel">
+              <div class="panel-head">
+                <div>
+                  <p class="eyebrow">تطبيق الراكب</p>
+                  <h1 id="riderTitle">مهام الاستلام والتسليم</h1>
+                  <p class="support-text" id="riderIdentity">الراكب الحالي</p>
+                </div>
+                <span class="status-pill" id="riderCityStatus">نواكشوط</span>
+              </div>
+
+              <div class="rider-summary">
+                <div>
+                  <span>أرباح اليوم</span>
+                  <strong id="riderEarnings">390 أوقية</strong>
+                </div>
+                <div>
+                  <span>المهام المفتوحة</span>
+                  <strong id="riderOpenJobs">2</strong>
+                </div>
+              </div>
+
+              <div class="location-card">
+                <div>
+                  <p class="eyebrow">تتبع GPS</p>
+                  <h3>موقعي الحالي</h3>
+                  <p class="support-text" id="riderLocationStatus">يعمل GPS تلقائيا أثناء دخولك كراكب.</p>
+                </div>
+                <button class="secondary-button" type="button" id="shareLocation">تحديث GPS الآن</button>
+              </div>
+
+              <div class="job-list" id="jobList"></div>
+            </section>
+
+            <section class="map-panel" aria-labelledby="riderRouteTitle">
+              <div class="map-board">
+                <div class="map-pin start">س</div>
+                <div class="map-road road-one"></div>
+                <div class="map-road road-two"></div>
+                <div class="map-pin end">ت</div>
+                <div class="motor-dot" aria-hidden="true"></div>
+              </div>
+              <div class="panel-head map-copy">
+                <div>
+                  <p class="eyebrow">المسار التالي</p>
+                  <h2 id="riderRouteTitle">استلم أولا ثم سلم</h2>
+                </div>
+                <span class="status-pill muted" id="nextRouteEta">22 دقيقة</span>
+              </div>
+            </section>
+          </section>
+
+          <section class="workspace dispatcher-workspace role-view" data-role-view="dispatcher" aria-labelledby="dispatcherTitle">
+            <section class="operations-panel">
+              <div class="panel-head">
+                <div>
+                  <p class="eyebrow">لوحة المشرف</p>
+                  <h1 id="dispatcherTitle">إدارة الأسطول</h1>
+                </div>
+                <span class="status-pill" id="dispatcherCityStatus">نواكشوط مباشرة</span>
+              </div>
+
+              <div class="dispatch-grid">
+                <div class="dispatch-metric">
+                  <span>بدون راكب</span>
+                  <strong id="unassignedCount">0</strong>
+                </div>
+                <div class="dispatch-metric">
+                  <span>دراجات مشغولة</span>
+                  <strong id="busyCount">2</strong>
+                </div>
+                <div class="dispatch-metric">
+                  <span>نقد قيد التحصيل</span>
+                  <strong id="cashDue">270 أوقية</strong>
+                </div>
+              </div>
+
+              <form class="dispatcher-order-form" id="dispatcherOrderForm">
+                <div class="panel-head">
+                  <div>
+                    <p class="eyebrow">طلب عبر الهاتف</p>
+                    <h2>إضافة توصيل للزبون</h2>
+                  </div>
+                  <span class="status-pill muted">من لوحة المشرف</span>
+                </div>
+
+                <div class="field-row">
+                  <div class="field">
+                    <label for="dispatchCustomerPhone">هاتف الزبون</label>
+                    <input id="dispatchCustomerPhone" name="dispatchCustomerPhone" type="tel" dir="ltr" placeholder="+222 ..." required />
+                  </div>
+                  <div class="field">
+                    <label for="dispatchRecipientPhone">هاتف المستلم</label>
+                    <input id="dispatchRecipientPhone" name="dispatchRecipientPhone" type="tel" dir="ltr" placeholder="+222 ..." required />
+                  </div>
+                </div>
+
+                <div class="field-row">
+                  <div class="field">
+                    <label for="dispatchPickup">منطقة الاستلام</label>
+                    <select id="dispatchPickup" name="dispatchPickup"></select>
+                  </div>
+                  <div class="field">
+                    <label for="dispatchDropoff">منطقة التسليم</label>
+                    <select id="dispatchDropoff" name="dispatchDropoff"></select>
+                  </div>
+                </div>
+
+                <div class="field">
+                  <label for="dispatchPickupAddress">عنوان الاستلام</label>
+                  <input id="dispatchPickupAddress" name="dispatchPickupAddress" type="text" placeholder="المكان الذي سنأخذ منه الطرد" />
+                </div>
+
+                <div class="field">
+                  <label for="dispatchDropoffAddress">عنوان التسليم</label>
+                  <input id="dispatchDropoffAddress" name="dispatchDropoffAddress" type="text" placeholder="المكان الذي سنوصل إليه الطرد" />
+                </div>
+
+                <div class="field-row">
+                  <div class="field">
+                    <label for="dispatchPackageSize">حجم الطرد</label>
+                    <select id="dispatchPackageSize" name="dispatchPackageSize">
+                      <option value="small">طرد صغير</option>
+                      <option value="medium">صندوق متوسط</option>
+                      <option value="large">حقيبة كبيرة</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="dispatchPayment">الدفع</label>
+                    <select id="dispatchPayment" name="dispatchPayment">
+                      <option>نقدا عند الاستلام</option>
+                      <option>نقدا عند التسليم</option>
+                      <option>بنكيلي</option>
+                      <option>مصرفي</option>
+                    </select>
+                  </div>
+                </div>
+
+                <button class="primary-button" type="submit">إضافة التوصيل</button>
+              </form>
+
+              <section class="live-map-panel" aria-labelledby="liveMapTitle">
+                <div class="panel-head map-head">
+                  <div>
+                    <p class="eyebrow">خريطة مباشرة</p>
+                    <h2 id="liveMapTitle">أماكن الدراجات الآن</h2>
+                  </div>
+                  <span class="status-pill muted" id="liveMapCount">0 راكب</span>
+                </div>
+                <div class="live-map" id="liveMap" aria-label="خريطة تتبع الدراجات">
+                  <span class="map-street street-a"></span>
+                  <span class="map-street street-b"></span>
+                  <span class="map-street street-c"></span>
+                  <div class="map-markers" id="mapMarkers"></div>
+                </div>
+                <div class="map-rider-details" id="mapRiderDetails">اختر راكبا من الخريطة لعرض التفاصيل.</div>
+                <iframe
+                  class="real-map-frame"
+                  id="realMapFrame"
+                  title="خريطة Google لموقع الراكب"
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                ></iframe>
+              </section>
+
+              <div class="orders-list" id="dispatchOrdersList"></div>
+            </section>
+
+            <aside class="dispatcher-panel visible" aria-labelledby="fleetTitle">
+              <div class="panel-head">
+                <div>
+                  <p class="eyebrow">الركاب</p>
+                  <h2 id="fleetTitle">تتبع الركاب</h2>
+                </div>
+              </div>
+
+              <div class="rider-list" id="riderList"></div>
+
+              <form class="price-card" id="addRiderForm">
+                <p class="eyebrow">إضافة راكب</p>
+                <p class="support-text">رقم الهاتف الذي تضيفه هنا يصبح رقم دخول الراكب إلى وصلة.</p>
+                <div class="field-row">
+                  <div class="field">
+                    <label for="riderName">اسم الراكب</label>
+                    <input id="riderName" name="riderName" type="text" placeholder="مثال: محمد" required />
+                  </div>
+                  <div class="field">
+                    <label for="riderPhone">هاتف الراكب</label>
+                    <input id="riderPhone" name="riderPhone" type="tel" dir="ltr" placeholder="+222 ..." required />
+                  </div>
+                </div>
+                <div class="field-row">
+                  <div class="field">
+                    <label for="riderCity">مدينة الراكب</label>
+                    <select id="riderCity" name="riderCity">
+                      <option value="nouakchott">نواكشوط</option>
+                      <option value="nouadhibou">نواذيبو</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label for="riderZone">موقع الراكب</label>
+                    <select id="riderZone" name="riderZone"></select>
+                  </div>
+                </div>
+                <button class="secondary-button" type="submit">إضافة الراكب</button>
+              </form>
+
+              <div class="price-card">
+                <p class="eyebrow">التسعير</p>
+                <h3 id="pricingTitle">نواكشوط: 90 أوقية</h3>
+                <label for="baseFee">السعر الأساسي</label>
+                <input id="baseFee" name="baseFee" type="number" min="50" step="5" value="90" />
+                <button class="secondary-button" type="button" id="savePricing">حفظ التسعير</button>
+              </div>
+            </aside>
+          </section>
+        </main>
+      </section>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

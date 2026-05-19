@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: wasla-realtime
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: HOST
+        value: 0.0.0.0
+      - key: DISPATCHER_PHONE
+        value: "44990000"
+      - key: AUTH_SECRET
+        sync: false
+      - key: TWILIO_ACCOUNT_SID
+        sync: false
+      - key: TWILIO_AUTH_TOKEN
+        sync: false
+      - key: TWILIO_VERIFY_SERVICE_SID
+        sync: false
+      - key: TWILIO_FROM
+        sync: false
+      - key: TWILIO_MESSAGING_SERVICE_SID
+        sync: false

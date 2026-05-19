@@ -1,0 +1,13 @@
+{
+  "orderSequence": 1104,
+  "prices": {
+    "nouakchott": 90,
+    "nouadhibou": 100
+  },
+  "riderEarnings": {
+    "nouakchott": 0,
+    "nouadhibou": 0
+  },
+  "riders": [],
+  "orders": []
+}
